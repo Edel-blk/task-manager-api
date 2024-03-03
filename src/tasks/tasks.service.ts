@@ -8,19 +8,15 @@ import { CreateTaskDTO, UpdateTaskDTO } from '../dto/task.dto';
 export class TasksService {
   constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
 
-  getAllTasks() {
-    return this.taskModel.find();
+  getAllTasks(id: string) {
+    return this.taskModel.find({ userId: id });
   }
 
   async createTask(createTask: CreateTaskDTO) {
+    console.log(createTask);
     const newTask = new this.taskModel(createTask);
     await newTask.save();
-    console.log(newTask);
     return newTask;
-  }
-
-  async findOne(id: string) {
-    return this.taskModel.findById(id);
   }
 
   deteleteTask(id: string) {

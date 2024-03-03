@@ -47,13 +47,9 @@ export class UsersService {
       email,
     });
 
-    console.log(user);
-
     if (!user) {
       throw new UnauthorizedException("User doesn't exist");
     }
-
-    console.log(password, user);
 
     const correctPassword = await bcrypt.compare(password, user.password);
 

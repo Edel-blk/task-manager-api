@@ -21,6 +21,11 @@ export class Task {
     default: TasksStatus.PENDING,
   })
   status: TasksStatus;
+
+  @Prop({
+    required: true,
+  })
+  userID: string;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

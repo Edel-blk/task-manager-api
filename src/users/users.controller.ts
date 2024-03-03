@@ -28,7 +28,6 @@ export class UsersController {
 
   @Post('login')
   searchUser(@Body() user: LoginUserDTO) {
-    console.log(user);
     return this.userService.searchUser(user);
   }
 

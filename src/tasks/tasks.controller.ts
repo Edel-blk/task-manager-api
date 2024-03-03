@@ -17,18 +17,9 @@ import { CreateTaskDTO, UpdateTaskDTO } from '../dto/task.dto';
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
-  @Get()
-  getAllTasks() {
-    return this.tasksService.getAllTasks();
-  }
-
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    const task = await this.tasksService.findOne(id);
-
-    if (!task) throw new NotFoundException('Task not found');
-
-    return task;
+  getAllTasks(@Param('id') id: string) {
+    return this.tasksService.getAllTasks(id);
   }
 
   @Post()

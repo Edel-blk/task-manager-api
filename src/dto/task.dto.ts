@@ -11,6 +11,10 @@ export class CreateTaskDTO {
   description: string;
 
   staus?: TasksStatus;
+
+  @IsString()
+  @IsNotEmpty()
+  userID: string;
 }
 
 export class UpdateTaskDTO {
