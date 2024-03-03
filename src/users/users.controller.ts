@@ -10,7 +10,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDTO, UpdateUserDTO } from 'src/dto/user.dto';
+import { CreateUserDTO, LoginUserDTO, UpdateUserDTO } from 'src/dto/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -21,9 +21,15 @@ export class UsersController {
     return this.userService.getAll();
   }
 
-  @Post()
+  @Post('sign-up')
   createUser(@Body() newUser: CreateUserDTO) {
     return this.userService.createUser(newUser);
+  }
+
+  @Post('login')
+  searchUser(@Body() user: LoginUserDTO) {
+    console.log(user);
+    return this.userService.searchUser(user);
   }
 
   @Put(':id')

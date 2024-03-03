@@ -15,7 +15,7 @@ export class TasksService {
   async createTask(createTask: CreateTaskDTO) {
     const newTask = new this.taskModel(createTask);
     await newTask.save();
-
+    console.log(newTask);
     return newTask;
   }
 
