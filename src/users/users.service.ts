@@ -57,6 +57,9 @@ export class UsersService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    return user;
+    const userValues = { ...user._doc };
+    delete userValues.password;
+
+    return userValues;
   }
 }
