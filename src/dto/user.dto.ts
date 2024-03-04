@@ -9,8 +9,8 @@ export class CreateUserDTO {
   @IsNotEmpty()
   last_name: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsEmail()
   email: string;
 
   @IsString()
@@ -27,7 +27,7 @@ export class UpdateUserDTO {
   @IsOptional()
   last_name?: string;
 
-  @IsString()
+  @IsEmail()
   @IsOptional()
   email?: string;
 
@@ -37,7 +37,6 @@ export class UpdateUserDTO {
 }
 
 export class LoginUserDTO {
-  @IsString()
   @IsEmail()
   email?: string;
 

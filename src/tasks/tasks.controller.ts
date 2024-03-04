@@ -30,7 +30,6 @@ export class TasksController {
       if (error.code === 11000) {
         throw new ConflictException('Task Already Exist');
       }
-
       throw error;
     }
   }
@@ -50,10 +49,15 @@ export class TasksController {
     @Param('id') id: string,
     @Body() updatedFields: UpdateTaskDTO,
   ) {
-    const task = await this.tasksService.updateTask(id, updatedFields);
-
-    if (!task) throw new NotFoundException('Task not found');
-
-    return task;
+    try {
+      const task = await this.tasksService.updateTask(id, updatedFields);
+      if (!task) throw new NotFoundException('Task not found');
+      return task;
+    } catch (error) {
+      if (error.code === 11000) {
+        throw new ConflictException('Task Already Exist');
+      }
+      throw error;
+    }
   }
 }
