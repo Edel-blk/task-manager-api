@@ -1,7 +1,11 @@
-TaskManager Backend con NestJS
+# Task Manager Api(NestJS)
 
-Intalacion de dependencias
-'pnpm install'
+API RESTful implementada para procesar datos del task manager
 
-Correr proyecto local
-'pnpm run start:dev'
+## Instalación
+
+
+Instalacion de dependencias
+```bash
+pnpm install
+pnpm run start:dev
