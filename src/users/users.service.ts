@@ -8,14 +8,10 @@ import { Model } from 'mongoose';
 import { CreateUserDTO, LoginUserDTO, UpdateUserDTO } from 'src/dto/user.dto';
 import { User } from 'src/schemas/user.schema';
 import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectModel(User.name) private userModel: Model<User>,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async getAll() {
     return this.userModel.find();
@@ -61,9 +57,6 @@ export class UsersService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { email: user.email };
-    const token = await this.jwtService.signAsync(payload);
-
-    return { ...user._doc, token };
+    return user;
   }
 }
