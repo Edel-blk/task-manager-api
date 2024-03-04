@@ -9,19 +9,23 @@ import {
   ConflictException,
   NotFoundException,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDTO, UpdateTaskDTO } from '../dto/task.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('tasks')
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   getAllTasks(@Param('id') id: string) {
     return this.tasksService.getAllTasks(id);
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   async createTask(@Body() newTask: CreateTaskDTO) {
     try {

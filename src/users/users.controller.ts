@@ -28,7 +28,7 @@ export class UsersController {
 
   @Post('login')
   searchUser(@Body() user: LoginUserDTO) {
-    return this.userService.searchUser(user);
+    return this.userService.login(user);
   }
 
   @Put(':id')

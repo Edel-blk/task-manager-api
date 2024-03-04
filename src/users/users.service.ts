@@ -8,10 +8,14 @@ import { Model } from 'mongoose';
 import { CreateUserDTO, LoginUserDTO, UpdateUserDTO } from 'src/dto/user.dto';
 import { User } from 'src/schemas/user.schema';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async getAll() {
     return this.userModel.find();
@@ -42,21 +46,24 @@ export class UsersService {
     return this.userModel.findByIdAndDelete(id);
   }
 
-  async searchUser({ email, password }: LoginUserDTO) {
+  async login({ email, password }: LoginUserDTO) {
     const user: any = await this.userModel.findOne({
       email,
     });
 
     if (!user) {
-      throw new UnauthorizedException("User doesn't exist");
+      throw new UnauthorizedException('Invalid credentials');
     }
 
     const correctPassword = await bcrypt.compare(password, user.password);
 
     if (!correctPassword) {
-      throw new UnauthorizedException('Wrong password');
+      throw new UnauthorizedException('Invalid credentials');
     }
 
-    return user;
+    const payload = { email: user.email };
+    const token = await this.jwtService.signAsync(payload);
+
+    return { ...user._doc, token };
   }
 }

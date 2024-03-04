@@ -9,7 +9,8 @@ export class TasksService {
   constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
 
   getAllTasks(id: string) {
-    return this.taskModel.find({ userId: id });
+    console.log(id);
+    return this.taskModel.find({ userID: id });
   }
 
   async createTask(createTask: CreateTaskDTO) {
